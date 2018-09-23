@@ -114,7 +114,7 @@ class CompaniesViewController: UITableViewController, CreateCompanyControllerDel
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
+    } 
     
     let label: UILabel = {
         let label = UILabel()
