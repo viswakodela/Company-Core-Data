@@ -101,7 +101,13 @@ class CompaniesViewController: UITableViewController, CreateCompanyControllerDel
         return cell
     }
     
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let company = self.companies[indexPath.row]
+        let employeesController = EmployeesContoller()
+        employeesController.company = company
+        navigationController?.pushViewController(employeesController, animated: true)
+        
+    }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (rowAction, indexPath) in
