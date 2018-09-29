@@ -20,9 +20,31 @@ class CompaniesViewController: UITableViewController, CreateCompanyControllerDel
         
         setupNavigationStyle()
         fetchCompanies()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(CompanyCell.self, forCellReuseIdentifier: cellId)
         tableView.backgroundColor = UIColor(red: 0, green: 128, blue: 128)
         tableView.separatorStyle = .none
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
+    }
+    
+    @objc func handleReset() {
+        
+        let context = CoreDataManager.shared.persistanceContainer.viewContext
+        
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+        do {
+            try context.execute(batchDeleteRequest)
+            
+            var indexpathsToRemove = [IndexPath]()
+            
+            for (index, _) in companies.enumerated() {
+                let indexPath = IndexPath(row: index, section: 0)
+                indexpathsToRemove.append(indexPath)
+            }
+            companies.removeAll()
+            tableView.deleteRows(at: indexpathsToRemove, with: .left)
+        } catch {
+            print(error)
+        }
     }
     
     fileprivate func fetchCompanies() {
@@ -52,22 +74,16 @@ class CompaniesViewController: UITableViewController, CreateCompanyControllerDel
     }
     
     func setupNavigationStyle() {
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = UIColor(red: 0, green: 153, blue: 153)
-        navigationController?.navigationBar.prefersLargeTitles = true
+        
         navigationItem.title = "Companies"
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(plusButtonTapped))
     }
     
     @objc func plusButtonTapped() {
-        
         let createCompanies = CreateCompaniesController()
         let navBar = UINavigationController(rootViewController: createCompanies)
         createCompanies.delgate = self
         present(navBar, animated: true, completion: nil)
-        
     }
     
     //MARK:- UITableView Methods
@@ -76,25 +92,16 @@ class CompaniesViewController: UITableViewController, CreateCompanyControllerDel
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CompanyCell
         
         let company = self.companies[indexPath.row]
+        cell.company = company
         
-        if let name = company.name, let founded = company.founded {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMM dd, yyyy"
-            let foundedDateString = dateFormatter.string(from: founded)
-            cell.textLabel?.text = "\(name) - Founded: \(foundedDateString)"
-        }
         
-        else {
-            
-        }
-        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        cell.backgroundColor = UIColor(red: 250, green: 250, blue: 210)
         return cell
     }
+    
+    
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (rowAction, indexPath) in
@@ -122,6 +129,20 @@ class CompaniesViewController: UITableViewController, CreateCompanyControllerDel
         return [deleteAction, editAction]
     }
     
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.text = "No Companies Available..."
+        label.textColor = .white
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return companies.isEmpty ? 150 : 0
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     } 
@@ -135,18 +156,30 @@ class CompaniesViewController: UITableViewController, CreateCompanyControllerDel
     }()
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
         let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .lightGray
-        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        headerTitleSetup(view: view)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        let label = UILabel()
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.text = "Names"
+//        label.backgroundColor = .lightGray
+//        label.font = UIFont.boldSystemFont(ofSize: 16)
+//
+//        view.addSubview(label)
+//
+//        label.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+//        label.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
+//        label.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+//        return view
+        
         return view
     }
     
-    fileprivate func headerTitleSetup(view: UIView) {
-        view.addSubview(label)
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        label.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
-        label.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
 }
 

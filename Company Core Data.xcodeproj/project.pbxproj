@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD2AA89D215FD2EF004C32B2 /* CompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2AA89C215FD2EF004C32B2 /* CompanyCell.swift */; };
 		BDAFBCC52152DEBE00592648 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAFBCC42152DEBE00592648 /* Company.swift */; };
 		BDAFBCC72152E7B300592648 /* CreateCompaniesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAFBCC62152E7B300592648 /* CreateCompaniesController.swift */; };
 		BDD93D7D2151BA1500D94C16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD93D7C2151BA1500D94C16 /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BD2AA89C215FD2EF004C32B2 /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
 		BDAFBCC42152DEBE00592648 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		BDAFBCC62152E7B300592648 /* CreateCompaniesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompaniesController.swift; sourceTree = "<group>"; };
 		BDD93D792151BA1500D94C16 /* Company Core Data.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Company Core Data.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD2AA89B215FD2D8004C32B2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BD2AA89C215FD2EF004C32B2 /* CompanyCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		BDD93D702151BA1500D94C16 = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +77,7 @@
 				BDD93D7C2151BA1500D94C16 /* AppDelegate.swift */,
 				BDD93D902151BDD800D94C16 /* Extensions */,
 				BDDFD0B52156BA6300EC2B25 /* Model */,
+				BD2AA89B215FD2D8004C32B2 /* View */,
 				BDDFD0B62156BA9900EC2B25 /* Controller */,
 				BDD93D802151BA1500D94C16 /* Main.storyboard */,
 				BDD93D832151BA1800D94C16 /* Assets.xcassets */,
@@ -177,6 +188,7 @@
 				BDD93D7F2151BA1500D94C16 /* CompaniesViewController.swift in Sources */,
 				BDD93D8F2151BDD000D94C16 /* UIColorExtension.swift in Sources */,
 				BDD93D7D2151BA1500D94C16 /* AppDelegate.swift in Sources */,
+				BD2AA89D215FD2EF004C32B2 /* CompanyCell.swift in Sources */,
 				BDAFBCC52152DEBE00592648 /* Company.swift in Sources */,
 				BDAFBCC72152E7B300592648 /* CreateCompaniesController.swift in Sources */,
 				BDDFD0BB21572A4700EC2B25 /* CoreDataManager.swift in Sources */,
