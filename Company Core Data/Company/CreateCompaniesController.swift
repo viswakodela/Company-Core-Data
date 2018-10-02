@@ -40,7 +40,7 @@ class CreateCompaniesController: UIViewController, UINavigationControllerDelegat
         return imageView
     }()
     
-    @objc func companyImageViewTapped(gesture: UITapGestureRecognizer) {
+    @objc func companyImageViewTapped() {
         print("Image Tapped")
         
         let imagePickerController = UIImagePickerController()

@@ -22,17 +22,20 @@ struct CoreDataManager {
         return container
     }()
     
-    func createEmployee(name: String) -> Error? {
+    func createEmployee(name: String, employeeType: String, birthday: Date, company: Company) -> (Employee?, Error?) {
         let context = CoreDataManager.shared.persistanceContainer.viewContext
-        let employee = NSEntityDescription.insertNewObject(forEntityName: "Employee", into: context)
+        let employee = NSEntityDescription.insertNewObject(forEntityName: "Employee", into: context) as! Employee
+        employee.company = company
         employee.setValue(name, forKey: "name")
+        employee.birthDay = birthday
+        employee.type = employeeType
         
         do {
             try context.save()
-            return nil
+            return (employee, nil)
         } catch {
             print(error)
-            return error
+            return (nil, error)
         }
     }
     

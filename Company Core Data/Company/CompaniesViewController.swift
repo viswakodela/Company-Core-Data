@@ -96,8 +96,6 @@ class CompaniesViewController: UITableViewController, CreateCompanyControllerDel
         
         let company = self.companies[indexPath.row]
         cell.company = company
-        
-        
         return cell
     }
     
